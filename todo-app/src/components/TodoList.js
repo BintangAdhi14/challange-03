@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TodoItem from "./TodoItem";
-import Search from "./Search"; // Impor komponen Search
+import Search from "./Search";
+// import { useNavigate } from "react-router-dom";
 
 const TodoList = ({ isRefresh, setRefresh }) => {
   // State untuk menyimpan daftar tugas, filter, dan kata kunci pencarian
@@ -28,6 +29,8 @@ const TodoList = ({ isRefresh, setRefresh }) => {
         }); 
     }
   }, [isRefresh, setRefresh]);
+
+  // const navigate = useNavigate ()
 
   // Fungsi untuk mengubah filter yang digunakan
   const handleFilterChange = (newFilter) => {
@@ -58,6 +61,9 @@ const TodoList = ({ isRefresh, setRefresh }) => {
 
   return (
     <div className="todo-list">
+      {/* <>
+      <button onClick={() => navigate('/Header.js')}>Add task</button>
+      </> */}
       {/* Menampilkan komponen Search untuk input pencarian */}
       <Search searchTerm={searchTerm} onSearchTermChange={handleSearchTermChange} />
       <div className="filter-buttons">

@@ -1,40 +1,16 @@
-import { useState } from "react";
+import { Link } from 'react-router-dom';
 
-const Header = ({setRefresh}) => {
-  const [task, setTask] = useState("");
-
-  // fungsi untuk menambah data todo melalui API ketika tombol "Add" di klik
-  const addTodo = () => {
-	  const newTodo = {task, complete: false}
-
-	  fetch('http://localhost:8000/todos', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newTodo)
-        }).then(() => {
-			// ketika sukses menambah data, reset form dengan mengeset state task menjadi empty string 
-			setTask("")
-			setRefresh(true)
-
-			setTimeout(() => {
-				alert('new todo added.')
-			}, 500)
-        });
-  }
-
+function Header() {
   return (
-    <div id="todo-header" className="header">
-      <h2>Simple Todo App</h2>
-	  <input className="input-header"
-		  type="text"
-		  value={task}
-		  onChange={(e) => setTask(e.target.value)}
-	  />
-      <span className="add-button" onClick={addTodo}>Add</span>
-    </div>
+    <>
+      <div className="header mt-2">
+        <h2>TodoList</h2>
+        <Link to="/new">
+          <span className="add-new">Add new Task</span>
+        </Link>
+      </div>
+    </>
   );
-};
+}
 
 export default Header;
