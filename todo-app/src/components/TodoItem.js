@@ -6,19 +6,23 @@ const TodoItem = ({ todo, setRefresh }) => {
   const [editedTask, setEditedTask] = useState(todo.task);
 
   const updateTodo = () => {
-    todo.complete = !todo.complete
-
+    const updatedTodo = { ...todo, complete: !todo.complete };
+  
     fetch("http://localhost:8000/todos/" + todo.id, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(todo)
-    }).then(() => {
-      console.log('todo updated.')
-      setRefresh(true)
+      body: JSON.stringify(updatedTodo),
     })
-  }
+      .then(() => {
+        console.log("todo updated.");
+        setRefresh(true);
+      })
+      .catch((error) => {
+        console.error("Error updating todo:", error);
+      });
+  };
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
@@ -66,7 +70,8 @@ const TodoItem = ({ todo, setRefresh }) => {
   };
 
   return (
-    <li onClick={updateTodo} className={`${todo.complete ? "checked" : ""}`}>
+    
+    <li className={`${todo.complete ? "checked" : ""}`} >
       {isEditing ? (
         // Tampilan saat mode edit aktif
         <>
@@ -81,7 +86,7 @@ const TodoItem = ({ todo, setRefresh }) => {
       ) : (
         // Tampilan saat tidak dalam mode edit
         <>
-          <div>{todo.task}</div>
+          <div onClick={updateTodo}>{todo.task}</div>
           <div class = "grid-container">
             <button  onClick={toggleEdit} i class="fa-solid fa-pencil" ></button>
             </div>
@@ -90,6 +95,7 @@ const TodoItem = ({ todo, setRefresh }) => {
       <div class = "grid-container">
       <span className="close" onClick={deleteTodo}>x</span>
     </div>
+    
     </li>
   );
 };
